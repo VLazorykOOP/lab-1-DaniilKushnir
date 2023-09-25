@@ -1,4 +1,6 @@
-/*#include <iostream>
+/*16. Знайти номер першого мінімального значення серед додатних елементів,
+розташованих правіше першого елемента, рівного нулю*/
+#include <iostream>
 #include <vector>
 #include <ctime>
 #include <fstream>
@@ -15,7 +17,7 @@ void RandomArray(vector<int>& A, vector<int>& B) {
     srand(time(NULL));
 
     for (int i = 0; i < 2 * N; i++) {
-        A[i] = rand() % 20 - 10; 
+        A[i] = rand() % 20 - 10;
     }
     fout.write((char*)&A[0], A.size() * sizeof(A[0]));
     fout.close();
@@ -49,17 +51,17 @@ int main() {
 
     MainTask(A, B);
 
-    cout << "Array B after main task: ";    
+    cout << "Array B after main task: ";
     for (int i = 0; i < B.size(); i++) {
         cout << B[i] << " ";
     }
     cout << endl;
 
     return 0;
-}*/
+}
 
-/*16. ������ ����� ������� ����������� �������� ����� �������� ��������,
-������������ ������ ������� ��������, ������ ����.
+/*16. Знайти номер першого мінімального значення серед додатних елементів,
+розташованих правіше першого елемента, рівного нулю.*/
 
 #include <iostream>
 #include <time.h>
@@ -80,37 +82,41 @@ int main() {
 
     int* ptr = A;
     bool b = false;
-    int min = 20;
+    int nextIntAfterZero = 0;
     for (int i = 0; i < N; i++) {
         if (*ptr == 0) {
             b = true;
+            ptr++;
             for (int j = i + 1; j < N; j++) {
-                if (*ptr > 0 && *ptr < min) {
-                    min = *ptr;
+                if (*ptr > 0) {
+                    nextIntAfterZero = *ptr;
+                    break;
                 }
-                ptr++; // ��� ������� for
+                ptr++;
             }
-            break;
+            if (nextIntAfterZero != 0) {
+                break;
+            }
         }
-        ptr++; //��� ���������� 
+        ptr++;
     }
 
-    if (min == 20) {
-        if (b) {
-            cout << "\nNo positive elements to the right of the first zero." << endl;
-        }
-        else {
-            cout << "\nNo zero elements found in the array." << endl;
-        }
+    if (b) {
+        cout << "\nThe next integer to the right of the first zero is: " << nextIntAfterZero << endl;
     }
     else {
-        cout << "\nThe first minimum positive value to the right of the first zero is: " << min << endl;
+        cout << "\nNo zero elements found in the array." << endl;
     }
     delete[] A;
     return 0;
-}*/
+}
 
 
+
+/*16. Задано масив чисел nA ,500n
+. Розробити програму, яка обчислює суму всіх чисел, які знаходяться між першим і
+останнім від’ємними елементами цього масиву і вказує цей діапазон. Якщо від’ємних
+чисел немає або є тільки одно, то виводить повідомлення про це.*/
 #include <iostream>
 #include <vector>
 #include <ctime>
@@ -146,7 +152,6 @@ void MainTask(vector<int>& A, int N, int& sum, int& last, int& first) {
         }
     }
 }
-
 int main() {
     int N, sum, last, first;
     cout << "Enter array size: ";
